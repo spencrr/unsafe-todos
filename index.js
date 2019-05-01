@@ -1,11 +1,11 @@
 const url = require('url');
 const express = require('express');
-const app = express();
-
+const sqlite3 = require('sqlite3');
 const sha256 = require('js-sha256').sha256;
 
 const cookieSession = require('cookie-session');
 
+const app = express();
 app.use(express.static('static'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -17,10 +17,12 @@ app.use(cookieSession({
 }));
 
 
-
-const sqlite3 = require('sqlite3');
-
 let db = new sqlite3.Database('./data/site.db');
+db.run('CREATE TABLE IF NOT EXISTS User(username TEXT, password TEXT)', (err) => {
+    if (err) {
+        console.log(err);
+    }
+});
 
 const port = process.env.PORT || 3000;
 
@@ -32,7 +34,7 @@ app.post('/login', (req, res) => {
     let {
         username,
         password
-    } = getCredentialsFromRequest(req.body);
+    } = getCredentialsFromRequest(req);
     searchForUser(username, (err, row) => {
         if (err) {
             console.log(err);
