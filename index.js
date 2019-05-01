@@ -29,36 +29,23 @@ app.listen(port, () => {
 });
 
 app.post('/login', (req, res) => {
-    //Vulernability?
-    let username = req.body.username;
-    let password = sha256(req.body.password);
-    console.log({
+    let {
         username,
         password
-    });
-    db.get(`SELECT * FROM User WHERE username='${username}'`, (err, row) => {
+    } = getCredentialsFromRequest(req.body);
+    searchForUser(username, (err, row) => {
         if (err) {
             console.log(err);
         } else {
-            if (!row) { //Register the User
-                //Vulnerability
-                db.run(`INSERT INTO User VALUES ('${username}', '${password}')`, (err, row) => {
+            if (!row) {
+                registerUser(username, password, (err) => {
                     if (err) {
                         console.log(err);
-                    } else {
-                        console.log(row);
                     }
                 });
                 res.redirect('/register');
-            } else { //check auth for user
-                const redirectURL = (base) => {
-                    return url.format({
-                        pathname: base,
-                        query: {
-                            username
-                        }
-                    });
-                };
+            } else {
+                const redirectURL = redirectWithUsername(username);
                 if (password == row.password) {
                     res.redirect(redirectURL('/success'));
                 } else {
@@ -69,3 +56,31 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
+const getCredentialsFromRequest = (req) => {
+    let username = req.body.username;
+    let password = sha256(req.body.password);
+    return {
+        username,
+        password
+    };
+};
+
+const searchForUser = (username, callback) => {
+    db.get(`SELECT * FROM User WHERE username='${username}'`, callback);
+};
+
+const registerUser = (username, password, callback) => {
+    db.run(`INSERT INTO User VALUES ('${username}', '${password}')`, callback);
+};
+
+const redirectWithUsername = (username) => {
+    return (base) => {
+        return url.format({
+            pathname: base,
+            query: {
+                username
+            }
+        });
+    };
+};
