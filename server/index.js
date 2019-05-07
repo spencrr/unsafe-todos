@@ -3,8 +3,6 @@ const express = require('express');
 const sqlite3 = require('sqlite3');
 const sha256 = require('js-sha256').sha256;
 
-const cookieSession = require('cookie-session');
-
 const app = express();
 app.use(express.static('static'));
 app.use(express.json());
@@ -86,3 +84,13 @@ const redirectWithUsername = (username) => {
         });
     };
 };
+
+app.get('/users', (req, res) => {
+    db.all('SELECT * FROM User', (err, rows) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(rows);
+        }
+    })
+});
