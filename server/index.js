@@ -9,10 +9,10 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key']
-}));
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['key']
+// }));
 
 
 let db = new sqlite3.Database('./data/site.db');
