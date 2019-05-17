@@ -1,4 +1,3 @@
-const url = require("url");
 const sqlite3 = require("sqlite3");
 const sha256 = require("js-sha256").sha256;
 const express = require("express");
@@ -25,15 +24,15 @@ router.post("/login", (req, res) => {
         registerUser(username, password, err => {
           if (err) {
             console.log(err);
+            res.send(500);
           }
         });
-        res.redirect("/register");
+        res.sendStatus(201);
       } else {
-        const redirectURL = redirectWithUsername(username);
         if (password == row.password) {
-          res.redirect(redirectURL("/success"));
+          res.sendStatus(200);
         } else {
-          res.redirect(redirectURL("/fail"));
+          res.sendStatus(401);
         }
       }
     }
@@ -54,18 +53,12 @@ const registerUser = (username, password, callback) => {
   db.run(`INSERT INTO User VALUES ('${username}', '${password}')`, callback);
 };
 
-const redirectWithUsername = username => {
-  return base => {
-    return url.format({ pathname: base, query: { username } });
-  };
-};
-
-router.get("/users", (req, res) => {
-  db.all("SELECT * FROM User", (err, rows) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(rows);
-    }
-  });
-});
+// router.get("/users", (req, res) => {
+//   db.all("SELECT * FROM User", (err, rows) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send(rows);
+//     }
+//   });
+// });
