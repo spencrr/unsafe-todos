@@ -6,11 +6,11 @@ const router = express.Router();
 
 module.exports = router;
 
-let db = new sqlite3.Database("./data/site.db");
+let db = new sqlite3.Database("./data/data.db");
 
 db.run("CREATE TABLE IF NOT EXISTS User(username TEXT, password TEXT)", err => {
   if (err) {
-    console.log(err);
+    console.log("erorr is ", err);
   }
 });
 
@@ -53,12 +53,12 @@ const registerUser = (username, password, callback) => {
   db.run(`INSERT INTO User VALUES ('${username}', '${password}')`, callback);
 };
 
-// router.get("/users", (req, res) => {
-//   db.all("SELECT * FROM User", (err, rows) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send(rows);
-//     }
-//   });
-// });
+router.get("/users", (req, res) => {
+  db.all("SELECT * FROM User", (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(rows);
+    }
+  });
+});

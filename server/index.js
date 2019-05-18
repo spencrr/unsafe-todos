@@ -1,5 +1,6 @@
 const express = require("express");
-const auth = require("./auth");
+const auth = require("./routes/auth");
+const todos = require("./routes/todos");
 
 const app = express();
 
@@ -26,3 +27,4 @@ app.listen(port, () => {
 });
 
 app.use("/auth", auth);
+app.use("/todos", todos);
