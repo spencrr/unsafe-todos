@@ -1,11 +1,15 @@
 const express = require("express");
+const Keygrip = require("keygrip");
+const cookieSession = require("cookie-session");
 const auth = require("./routes/auth");
 const todos = require("./routes/todos");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.static("static"));
 app.use(express.json());
+app.use(cors());
 
 app.use(
   express.urlencoded({
@@ -13,12 +17,12 @@ app.use(
   })
 );
 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: ["key"]
-//   })
-// );
+app.use(
+  cookieSession({
+    name: "session",
+    keys: new Keygrip(["key1", "key2"], "SHA256")
+  })
+);
 
 const port = process.env.PORT || 3000;
 

@@ -10,7 +10,7 @@ let db = new sqlite3.Database("./data/data.db");
 
 db.run("CREATE TABLE IF NOT EXISTS User(username TEXT, password TEXT)", err => {
   if (err) {
-    console.log("erorr is ", err);
+    console.log(err);
   }
 });
 
