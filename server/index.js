@@ -4,6 +4,7 @@ const cookieSession = require("cookie-session");
 const auth = require("./routes/auth");
 const todos = require("./routes/todos");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -30,6 +31,6 @@ app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
 
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use("/auth", auth);
 app.use("/todos", todos);
