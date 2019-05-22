@@ -11,7 +11,7 @@ module.exports = router;
 let db = new sqlite3.Database("./data/data.db");
 
 db.run(
-  "CREATE TABLE IF NOT EXISTS Items(name TEXT, description TEXT, id TEXT, complete BOOL)",
+  "CREATE TABLE IF NOT EXISTS Items(name TEXT, desc TEXT, id TEXT, done BOOL)",
   err => {
     if (err) {
       console.log(err);
@@ -32,15 +32,15 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   let name = req.body.name;
-  let description = req.body.description;
-  if (name && description) {
-    let item = { name, description };
+  let desc = req.body.desc;
+  if (name && desc) {
+    let item = { name, desc };
     // let id = sha256(JSON.stringify(item));
     let id = uuid();
     item.id = id;
-    item.complete = false;
+    item.done = false;
     db.run(
-      `INSERT INTO Items VALUES ('${name}', '${description}', '${id}', 'false')`,
+      `INSERT INTO Items VALUES ('${name}', '${desc}', '${id}', 'false')`,
       err => {
         if (err) {
           console.log(err);
@@ -55,8 +55,8 @@ router.post("/", (req, res) => {
   }
 });
 
-router.delete("/", (req, res) => {
-  let id = req.body.id;
+router.delete("/:id", (req, res) => {
+  let id = req.params.id;
   if (id) {
     db.run(`DELETE FROM Items WHERE id='${id}'`, err => {
       if (err) {
@@ -71,18 +71,28 @@ router.delete("/", (req, res) => {
   }
 });
 
-router.patch("/", (req, res) => {
-  let id = req.body.id;
-  let complete = req.body.complete;
-  if (id !== undefined && complete !== undefined) {
-    db.run(`UPDATE Items SET complete='${complete}' WHERE id='${id}'`, err => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(200);
+router.patch("/:id/", (req, res) => {
+  let id = req.params.id;
+  let setName = req.body.name !== undefined ? `name='${req.body.name}',` : "";
+  let setDesc = req.body.desc !== undefined ? `desc='${req.body.desc}',` : "";
+  let setDone = req.body.done !== undefined ? `done='${req.body.done}'` : "";
+  if (id !== undefined) {
+    db.run(
+      `UPDATE Items SET ${setName} ${setDesc} ${setDone} WHERE id='${id}'`,
+      err => {
+        if (err) {
+          console.log(
+            err,
+            `UPDATE Items SET ${setName} ${setDesc} ${setDone} WHERE id='${id}'`
+          );
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
       }
-    });
+    );
   } else {
     res.sendStatus(400);
+    console.log(id, setDone);
   }
 });

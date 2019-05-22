@@ -30,5 +30,6 @@ app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
 
+app.use(express.static(__dirname));
 app.use("/auth", auth);
 app.use("/todos", todos);

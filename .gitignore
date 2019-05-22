@@ -1,6 +1,7 @@
 
-# Created by https://www.gitignore.io/api/node,macos,linux,windows
-# Edit at https://www.gitignore.io/?templates=node,macos,linux,windows
+
+# Created by https://www.gitignore.io/api/node,vuejs,linux,macos,windows
+# Edit at https://www.gitignore.io/?templates=node,vuejs,linux,macos,windows
 
 ### Linux ###
 *~
@@ -131,6 +132,13 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+dist/
+npm-debug.log
+yarn-error.log
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -156,7 +164,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/node,macos,linux,windows
+# End of https://www.gitignore.io/api/node,vuejs,linux,macos,windows
 *.db
 
 .DS_Store

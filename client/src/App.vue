@@ -17,4 +17,9 @@
   margin: 0;
   padding: 0;
 }
+
+html {
+  height: 100%;
+  background: linear-gradient(to bottom left, #fff, #aaa);
+}
 </style>
