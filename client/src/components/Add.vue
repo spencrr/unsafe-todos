@@ -17,7 +17,7 @@ export default {
     add(event) {
       let form = event.currentTarget;
       axios
-        .post("http://localhost:3000/todos", {
+        .post("/todos", {
           name: form.name.value,
           desc: form.desc.value
         })

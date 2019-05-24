@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     fillTodos() {
-      axios.get("http://localhost:3000/todos").then(res => {
+      axios.get("/todos").then(res => {
         this.todos = res.data.map(e => {
           e.done = e.done === "true";
           return e;
@@ -52,9 +52,7 @@ export default {
       });
     },
     delTodos() {
-      let requests = this.todos.map(todo =>
-        axios.delete(`http://localhost:3000/todos/${todo.id}`)
-      );
+      let requests = this.todos.map(todo => axios.delete(`/todos/${todo.id}`));
       axios.all(requests).then(() => (this.todos = []));
     }
   },

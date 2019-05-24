@@ -31,11 +31,11 @@ export default {
   props: ["todo"],
   methods: {
     update() {
-      axios.patch(`http://localhost:3000/todos/${this.todo.id}`, this.todo);
+      axios.patch(`/todos/${this.todo.id}`, this.todo);
       this.$emit("doneEditing");
     },
     setDeleted() {
-      axios.delete(`http://localhost:3000/todos/${this.todo.id}`).then(() => {
+      axios.delete(`/todos/${this.todo.id}`).then(() => {
         this.$emit("delete");
       });
     },
