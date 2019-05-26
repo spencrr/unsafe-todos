@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node index.js",
+    "prestart": "vue-cli-service build",
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
