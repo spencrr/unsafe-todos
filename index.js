@@ -8,7 +8,6 @@ const path = require("path");
 
 const app = express();
 
-app.use(express.static("static"));
 app.use(express.json());
 app.use(cors());
 
@@ -31,6 +30,6 @@ app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static("dist"));
 app.use("/auth", auth);
 app.use("/todos", todos);
