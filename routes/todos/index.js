@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   let name = req.body.name;
   let desc = req.body.desc;
-  if (name && desc) {
+  if (typeof name === "string" && typeof desc === "string") {
     let item = { name, desc };
     // let id = sha256(JSON.stringify(item));
     let id = uuid();
@@ -57,7 +57,7 @@ router.post("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   let id = req.params.id;
-  if (id) {
+  if (typeof id !== "undefined") {
     db.run(`DELETE FROM Items WHERE id='${id}'`, err => {
       if (err) {
         console.log(err);
@@ -76,7 +76,7 @@ router.patch("/:id/", (req, res) => {
   let setName = req.body.name !== undefined ? `name='${req.body.name}',` : "";
   let setDesc = req.body.desc !== undefined ? `desc='${req.body.desc}',` : "";
   let setDone = req.body.done !== undefined ? `done='${req.body.done}'` : "";
-  if (id !== undefined) {
+  if (typeof id !== "undefined") {
     db.run(
       `UPDATE Items SET ${setName} ${setDesc} ${setDone} WHERE id='${id}'`,
       err => {

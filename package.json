@@ -13,26 +13,26 @@
   "author": "Spencer Schoenberg",
   "license": "MIT",
   "dependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "axios": "^0.18.0",
     "cookie-session": "^1.3.3",
+    "core-js": "^2.6.9",
     "cors": "^2.8.5",
-    "express": "^4.17.0",
+    "express": "^4.17.1",
     "js-sha256": "^0.9.0",
     "keygrip": "^1.1.0",
     "sqlite3": "^4.0.8",
     "uuid": "^3.3.2",
-    "axios": "^0.18.0",
-    "core-js": "^2.6.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "nodemon": "^1.19.0",
-    "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
     "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "nodemon": "^1.19.1",
     "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
