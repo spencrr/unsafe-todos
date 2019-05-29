@@ -1,7 +1,5 @@
 <template>
   <div class="todo-item">
-    <label for="done">Done</label>
-    <input name="done" type="checkbox" :checked="todo.done" v-model="todo.done" @change="update">
     <div :class="{done: todo.done}" class="todo-item-info">
       <input
         class="todo-item-title"
@@ -18,6 +16,8 @@
         @focus="editing"
       >
     </div>
+    <label for="done">Done</label>
+    <input name="done" type="checkbox" :checked="todo.done" v-model="todo.done" @change="update">
     <label for="delete">Delete</label>
     <input type="checkbox" name="delete" @click="setDeleted">
   </div>
