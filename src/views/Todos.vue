@@ -3,7 +3,7 @@
     <Add @add="fillTodos"/>
     <button @click="fillTodos">Add</button>
     <br>
-    <button @click="delTodos">Delete</button>
+    <button @click="delTodos">Delete All</button>
     <div class="todo-items">
       <TodoItem
         :todo="todo"
