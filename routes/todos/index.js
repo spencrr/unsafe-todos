@@ -33,7 +33,6 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   let name = req.body.name;
   let desc = req.body.desc;
-  console.log(`Posting ${name}, ${desc}`);
   if (name !== undefined && desc !== undefined) {
     let item = { name, desc };
     // let id = sha256(JSON.stringify(item));
