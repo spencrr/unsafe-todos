@@ -21,7 +21,7 @@ export default {
           name: form.name.value,
           desc: form.desc.value
         })
-        .then(res => {
+        .then(() => {
           form.reset();
           this.$emit("add");
         });
