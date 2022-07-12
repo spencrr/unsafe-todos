@@ -1,6 +1,6 @@
 const sqlite3 = require("sqlite3");
 // const sha256 = require("js-sha256").sha256;
-const uuid = require("uuid");
+const { v4: uuid } = require("uuid");
 
 const express = require("express");
 

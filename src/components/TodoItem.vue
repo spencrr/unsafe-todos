@@ -1,77 +1,69 @@
 <template>
-  <div class="todo-item">
-    <div :class="{done: todo.done}" class="todo-item-info">
-      <input
-        class="todo-item-title"
-        @blur="update"
-        @keydown.enter="update"
-        v-model="todo.name"
-        @focus="editing"
-      >
-      <input
-        class="todo-item-desc"
-        @blur="update"
-        @keydown.enter="update"
-        v-model="todo.desc"
-        @focus="editing"
-      >
+    <div class="todo-item">
+        <div :class="{ done: todo.done }" class="todo-item-info">
+            <input class="todo-item-title" @blur="update" @keydown.enter="update" v-model="todo.name" @focus="editing">
+            <input class="todo-item-desc" @blur="update" @keydown.enter="update" v-model="todo.desc" @focus="editing">
+        </div>
+        <label for="done">Done</label>
+        <input name="done" type="checkbox" :checked="todo.done" v-model="todo.done" @change="update">
+        <label for="delete">Delete</label>
+        <input type="checkbox" name="delete" @click="setDeleted">
     </div>
-    <label for="done">Done</label>
-    <input name="done" type="checkbox" :checked="todo.done" v-model="todo.done" @change="update">
-    <label for="delete">Delete</label>
-    <input type="checkbox" name="delete" @click="setDeleted">
-  </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from "axios";
+import { defineComponent } from "vue";
 
-export default {
-  name: "todoItem",
-  props: ["todo"],
-  methods: {
-    update() {
-      axios.patch(`/todos/${this.todo.id}`, this.todo);
-      this.$emit("doneEditing");
-    },
-    setDeleted() {
-      axios.delete(`/todos/${this.todo.id}`).then(() => {
-        this.$emit("delete");
-      });
-    },
-    editing() {
-      this.$emit("editing");
+export default defineComponent({
+    name: "todoItem",
+    props: ["todo"],
+    methods: {
+        update() {
+            axios.patch(`/todos/${this.todo.id}`, this.todo);
+            this.$emit("doneEditing");
+        },
+        setDeleted() {
+            axios.delete(`/todos/${this.todo.id}`).then(() => {
+                this.$emit("delete");
+            });
+        },
+        editing() {
+            this.$emit("editing");
+        }
     }
-  }
-};
+});
 </script>
- 
+
 <style>
 .todo-item {
-  width: 25vw;
-  margin: 5px;
-  border-radius: 10px;
-  background-image: linear-gradient(to bottom right, #e839ff7e, #ffc4007e);
-  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.05);
-  padding: 20px;
+    width: 25vw;
+    margin: 5px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, #e839ff7e, #ffc4007e);
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
 }
+
 .todo-item-title,
 .todo-item-desc {
-  background: none;
-  border: none;
-  text-align: center;
-  text-decoration: inherit;
+    background: none;
+    border: none;
+    text-align: center;
+    text-decoration: inherit;
 }
 
 .todo-item-title {
-  font-weight: bold;
-  font-size: 200%;
-  width: 100%;
+    font-weight: bold;
+    font-size: 200%;
+    width: 100%;
 }
+
 .done {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
+
 .todo-item-delete {
-  padding: 0;
+    padding: 0;
 }
 </style>
